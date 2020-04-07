@@ -51,6 +51,19 @@ div.about {
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
   border-radius: 6px;
+  align-content: center;
+}
+
+.about-text {
+  padding: 1rem;
+  width: 100%;
+  background-color: #b3ffcc;
+  border-radius: 6px;
+}
+
+.about-text p{
+  font: small-caps bold 1.2rem sans-serif;
+  text-align: justify;
 }
 
 h1 {
@@ -69,9 +82,8 @@ h2 {
 
 p {
   font-size: 1.2em;
-    font-weight: bold;
+  font-weight: bold;
   margin-top: auto;
-  text-align: center;
   letter-spacing: normal;
   color: #00000;
 }
@@ -83,6 +95,27 @@ h3 {
   text-align: center;
   letter-spacing: -1px;
   color: #999;
+}
+
+/*
+* Formatting links
+*/
+a:link {
+  color: green;
+}
+
+a:visited {
+  color: violet;
+}
+
+a:hover {
+  color: hotpink;
+  text-decoration: underline;
+}
+
+a:active {
+  color: blue;
+  text-decoration: underline;
 }
 
 .menu {
