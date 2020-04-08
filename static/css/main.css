@@ -18,6 +18,7 @@ header {
 
 header h1.logo {
   margin: 0;
+  font-family: "Accanthis ADF Std";
   font-size: 1.7em;
   color: #ffffff;
   text-transform: uppercase;
@@ -61,7 +62,7 @@ div.about {
   border-radius: 6px;
 }
 
-.about-text p{
+.about-text p {
   font: small-caps bold 1.2rem sans-serif;
   text-align: justify;
 }

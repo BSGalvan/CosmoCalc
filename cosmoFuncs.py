@@ -19,6 +19,7 @@ Created on Tue Mar 31 21:46:31 2020
 import numpy as np
 from scipy.constants import pi
 from astropy.constants import c, G
+from scipy.integrate import quad
 
 c = c.value / 1000.0  # get the value of the speed of light in km/s
 G = G.value  # get the value of the Universal Gravitational Constant
