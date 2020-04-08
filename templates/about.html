@@ -4,15 +4,24 @@
 <body>
   {% extends "layout.html" %}
   {% block content %}
-  <div class="about">
+  <div class="about" align='center'>
     <h1>About this Page</h1>
     <div class="about-text">
-      <p>This page was made for assessment as part of the course "ESA423 : Cosmology". Ideas from
-        <a href="https://ui.adsabs.harvard.edu/abs/2006PASP..118.1711W/abstract">
+      <p>This page was made for assessment as part of the course ESA423 - Cosmology. Ideas are from
+        <a href="http://www.astro.ucla.edu/~wright/CosmoCalc.html">
           Ned Wright's original</a>.
-        This is just a modern take on the same, using Python and the Flask framework for light, flexible webpages.</p>
+        This is just a modern take on the same, leveraging the power of SciPy and NumPy modules, along
+        with the Pandas library for processing and formatting the form data into HTML, and
+        the Flask framework for light, flexible webpages.</p>
     </div>
   </div>
+  <footer>
+    <div class="github">
+      <a href="https://github.com/BSGalvan/CosmoCalc">
+        <img src="../static/images/octocat.svg" alt="https://github.com/BSGalvan/CosmoCalc" style="width:64px;height:64px;border:0">
+      </a>
+    </div>
+  </footer>
   {% endblock %}
 </body>
 

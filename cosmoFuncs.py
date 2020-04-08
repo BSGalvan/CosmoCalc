@@ -17,12 +17,11 @@ Created on Tue Mar 31 21:46:31 2020
 # 8. Luminosity distance (in Mpc) (Done)
 
 import numpy as np
-from scipy.constants import pi
-from astropy.constants import c, G
+from scipy.constants import pi, c, G
 from scipy.integrate import quad
 
-c = c.value / 1000.0  # get the value of the speed of light in km/s
-G = G.value  # get the value of the Universal Gravitational Constant
+
+c = c / 1000.0  # get the value of the speed of light in km/s
 arcsec = pi / (3600 * 180)  # conversion from " to radians
 
 # Note : We assume that omega_k_0 = 0.0, and omega_rad_0 is too small, such that

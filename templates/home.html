@@ -5,26 +5,26 @@
   {% extends "layout.html" %}
   {% block content %}
   <div class="home">
-    {{ errors }}
+    <b>
+      {{ errors }}
+    </b>
     <h1 align='center'> The Calculator </h1>
 
-    <hr>
-    
     <p align='center'>Enter the values, hit a button:</p>
     <form method="post" action=".">
-      <p>z: <input name="redshift" /></p>
-      <p>Hubble's Constant: <input name="hubblepar" /></p>
-      <p>Omega_m: <input name="omega_m" /></p>
-      <p><input type="submit" value="Do calculation" /></p>
+      <p><var>z</var>: <input name="redshift" /></p>
+      <p>Hubble's Constant (<var>H<sub>0</sub></var>): <input name="hubblepar" /></p>
+      <p><var>&Omega;</var><sub>m</sub></var>: <input name="omega_m" /></p>
+      <p><input type="submit" value="Calculate!" /></p>
     </form>
 
     <hr>
 
     <div class="results">
-      <h1>Results</h1>
-      <p>The results are as follows:</p>
+      <h1>The Results</h1>
+      <p align='center'>The results are as follows:</p>
       {{ table|safe }}
-      <p> <a href="/"> Click here to calculate again </a></p>
+      <p align='center'> <a href="/"> Click here to calculate again </a></p>
     </div>
     {% endblock %}
   </div>
