@@ -56,7 +56,7 @@ def t(parameters, z_val):
     ---------
     parameters : list of length 3
         A list containing the cosmological parameters, with:
-        parameter[0] = H_0
+        parameter[0] = H_0 (in units of km/s/Mpc)
         parameter[1] = omega_lam_0
         parameter[2] = omega_m_0
 
@@ -83,7 +83,7 @@ def lightTravelTime(parameters, z_val):
     ---------
     parameters : list of length 3
         A list containing the cosmological parameters, with:
-        parameter[0] = H_0
+        parameter[0] = H_0 (in units of km/s/Mpc)
         parameter[1] = omega_lam_0
         parameter[2] = omega_m_0
 
@@ -110,7 +110,7 @@ def comoving_distance(parameters, z_val):
     ---------
     parameters : list of length 3
         A list containing the cosmological parameters, with:
-        parameter[0] = H_0
+        parameter[0] = H_0 (in units of km/s/Mpc)
         parameter[1] = omega_lam_0
         parameter[2] = omega_m_0
 
@@ -137,7 +137,7 @@ def comoving_volume(parameters, z_val):
     ---------
     parameters : list of length 3
         A list containing the cosmological parameters, with:
-        parameter[0] = H_0
+        parameter[0] = H_0 (in units of km/s/Mpc)
         parameter[1] = omega_lam_0
         parameter[2] = omega_m_0
 
@@ -165,7 +165,7 @@ def angulardiameter_distance(parameters, z_val):
     ---------
     parameters : list of length 3
         A list containing the cosmological parameters, with:
-        parameter[0] = H_0
+        parameter[0] = H_0 (in units of km/s/Mpc)
         parameter[1] = omega_lam_0
         parameter[2] = omega_m_0
 
@@ -193,7 +193,7 @@ def linear_scale(parameters, z_val):
     ---------
     parameters : list of length 3
         A list containing the cosmological parameters, with:
-        parameter[0] = H_0
+        parameter[0] = H_0 (in units of km/s/Mpc)
         parameter[1] = omega_lam_0
         parameter[2] = omega_m_0
 
@@ -222,7 +222,7 @@ def luminosity_distance(parameters, z_val):
     ---------
     parameters : list of length 3
         A list containing the cosmological parameters, with:
-        parameter[0] = H_0
+        parameter[0] = H_0 (in units of km/s/Mpc)
         parameter[1] = omega_lam_0
         parameter[2] = omega_m_0
 

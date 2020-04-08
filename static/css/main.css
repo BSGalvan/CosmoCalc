@@ -2,14 +2,15 @@ body {
   margin: 0;
   padding: 0;
   font-family: "Century Schoolbook L", Helvetica, Arial, sans-serif;
-  color: #444;
+  color: #ffffff;
+  background-color: #000000;
 }
 
 /*
  * Formatting the header area
  */
 header {
-  background-color: #000000;
+  background-color: #242424;
   height: 35px;
   width: 100%;
   opacity: .9;
@@ -26,7 +27,7 @@ header h1.logo {
 }
 
 header h1.logo:hover {
-  color: #44ff00;
+  color: #792eff;
   text-decoration: none;
 }
 
@@ -36,35 +37,52 @@ header h1.logo:hover {
 .container {
   width: 800px;
   margin: 0 auto;
+  background-color: #000000;
 }
 
-div.home {
-  padding: 10px 0 30px 0;
-  background-color: #b3ffcc;
+input{
+  width: 100%;
+  padding: 10px;
+  margin: 10px auto;
+  color: #ffffff;
+  box-sizing: border-box;
+  background-color: #75715e;
+  border: 2px #f92672;
+  border-style: outset;
+  border-radius: 10px;
+}
+
+input:focus{
+  border: 2px #a6e22e;
+  border-style: solid;
+  border-radius: 10px;
+}
+input[type=submit]:hover{
+  border: 2px #792eff;
+  border-style: solid;
+  border-radius: 10px;
+  color: #a6e22e;
+  background-color: #000000;
+}
+
+div.home, div.about, div.results {
+  padding: 10px 10px 30px 10px;
+  background-color: #242424;
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
   border-radius: 6px;
-}
-
-div.about {
-  padding: 10px 0 30px 0;
-  background-color: #b3ffcc;
-  -webkit-border-radius: 6px;
-  -moz-border-radius: 6px;
-  border-radius: 6px;
-  align-content: center;
 }
 
 .about-text {
-  padding: 1rem;
+  padding: 1rem 1rem 1rem 1rem;
   width: 100%;
   background-color: #b3ffcc;
   border-radius: 6px;
 }
 
 .about-text p {
-  font: small-caps bold 1.2rem sans-serif;
-  text-align: justify;
+  font: small-caps bold 1.3rem sans-serif;
+  text-align: center;
 }
 
 h1 {
@@ -84,7 +102,9 @@ h2 {
 p {
   font-size: 1.2em;
   font-weight: bold;
-  margin-top: auto;
+  margin-top: 1rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
   letter-spacing: normal;
   color: #00000;
 }
@@ -106,16 +126,16 @@ a:link {
 }
 
 a:visited {
-  color: violet;
+  color: hotpink;
 }
 
 a:hover {
-  color: hotpink;
+  color: violet;
   text-decoration: underline;
 }
 
 a:active {
-  color: blue;
+  color: #66D9EF;
   text-decoration: underline;
 }
 
@@ -138,6 +158,6 @@ a:active {
 }
 
 .menu li a:hover {
-  color: #44ff00;
+  color: #792eff;
   text-decoration: none;
 }
