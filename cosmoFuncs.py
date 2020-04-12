@@ -5,17 +5,6 @@ Created on Tue Mar 31 21:46:31 2020
 
 @author: Bharath Saiguhan
 """
-
-# Have to write code for the following :
-# 1. Age at redshift z = 0 (Done)
-# 2. Age at redshift z = z_user (Done)
-# 3. Light Travel time = 1. - 2. (Done)
-# 4. Comoving Radial Distance = 3. * c (in Mpc) (Done)
-# 5. Comoving Volume within redshift z = 4.** 3 (in cubic Gpc) (Done)
-# 6. Angular Size Distance (in Mpc) (Done)
-# 7. Scale factor (kpc / arcsec) (Done)
-# 8. Luminosity distance (in Mpc) (Done)
-
 import numpy as np
 from scipy.constants import pi, c, G
 from scipy.integrate import quad
@@ -24,14 +13,14 @@ from scipy.integrate import quad
 c = c / 1000.0  # get the value of the speed of light in km/s
 arcsec = pi / (3600 * 180)  # conversion from " to radians
 
-# Note : We assume that omega_k_0 = 0.0, and omega_rad_0 is too small, such that
-#        it can be safely neglected as well. We will only input the values of
-#        H_0, omega_m and omega_lam
+# Note : We hardcode omega_rad_0 to 4.165e(-5), and omega_k is computed
+#        according to omega_k + omega_m + omega_lam + omega_rad_0 = 1
+#        We will only input the values of H_0, omega_m and omega_lam.
 
 
 def convertH(H):
     """
-    A function to convert a given Hubble's constant value from km/s/Mpc to 1/s
+    A helper function to convert a given Hubble's constant value from km/s/Mpc to 1/s
 
     Arguments
     ---------
@@ -47,6 +36,24 @@ def convertH(H):
     return(H * 1000 / (3.086e22))
 
 
+def HubbleDistance(H):
+    """
+    A helper function to compute the Hubble distance given the current Hubble's constant.
+
+    Arguments
+    ---------
+    H : float
+        A value of the Hubble's constant to use for the calculation
+
+    Returns
+    -------
+    d_H : float
+        Value of the Hubble distance in Mpc
+    """
+    d_H = c / H
+    return d_H
+
+
 def t(parameters, z_val):
     """
     A function to calculate age of Universe at the given redshift of z_val.
@@ -55,7 +62,7 @@ def t(parameters, z_val):
     ---------
     parameters : list of length 3
         A list containing the cosmological parameters, with:
-        parameter[0] = H_0 (in units of km/s/Mpc)
+        parameter[0] = H_0 (in units of 1/s)
         parameter[1] = omega_lam_0
         parameter[2] = omega_m_0
 
@@ -68,8 +75,11 @@ def t(parameters, z_val):
         A value for the Age of the Universe (in Gyr) at redshift z = z_val.
 
     """
+    h = parameters[0] * (3.086e22) / 100000  # normalized Hubble's constant
+    omega_rad = 4.165e-5 / (h ** 2)
+    omega_k = 1 - sum(parameters[1:]) - omega_rad
     def integrand(z): return 1 / ((1 + z) *
-                                  (parameters[0] * np.sqrt((parameters[1] + parameters[2] * (1 + z) ** 3))))
+                                  (parameters[0] * np.sqrt((parameters[1] + parameters[2] * (1 + z) ** 3 + omega_k * (1 + z) ** 2 + omega_rad * (1 + z) ** 4))))
     t_age = quad(integrand, z_val, np.inf)[0] / (86400 * 365 * 1e9)
     return(t_age)
 
@@ -82,7 +92,7 @@ def lightTravelTime(parameters, z_val):
     ---------
     parameters : list of length 3
         A list containing the cosmological parameters, with:
-        parameter[0] = H_0 (in units of km/s/Mpc)
+        parameter[0] = H_0 (in units of 1/s)
         parameter[1] = omega_lam_0
         parameter[2] = omega_m_0
 
@@ -100,9 +110,9 @@ def lightTravelTime(parameters, z_val):
     return(ltt)
 
 
-def comoving_distance(parameters, z_val):
+def comoving_distance_radial(parameters, z_val):
     """
-    A function to compute the comoving distance, given the cosmological parameters and a value
+    A function to compute the (radial) comoving distance, given the cosmological parameters and a value
     for redshift.
 
     Arguments
@@ -119,12 +129,52 @@ def comoving_distance(parameters, z_val):
     Returns
     -------
     d_c : float
-        The Comoving Distance (in Mpc) corresponding to the Cosmological parameters given, at the redshift z_val.
+        The (Radial) Comoving Distance (in Mpc) corresponding to the Cosmological parameters given, at the redshift z_val.
 
     """
+    h = parameters[0] / 100  # normalized Hubble's constant
+    omega_rad = 4.165e-5 / (h ** 2)
+    omega_k = 1 - sum(parameters[1:]) - omega_rad
+
     def denom(z): return 1 / \
-        (parameters[0] * np.sqrt((parameters[1] + parameters[2] * (1 + z) ** 3)))
+        (parameters[0] * np.sqrt((parameters[1] + parameters[2] * (1 + z)
+                                  ** 3 + omega_k * (1 + z) ** 2 + omega_rad * (1 + z) ** 4)))
     return(c * quad(denom, 0, z_val)[0])
+
+
+def comoving_distance_transverse(parameters, z_val):
+    """
+    A function to compute the (transverse) comoving distance, given the cosmological parameters and a value
+    for redshift.
+
+    Arguments
+    ---------
+    parameters : list of length 3
+        A list containing the cosmological parameters, with:
+        parameter[0] = H_0 (in units of km/s/Mpc)
+        parameter[1] = omega_lam_0
+        parameter[2] = omega_m_0
+
+    z_val : float
+        A value for the redshift.
+
+    Returns
+    -------
+    d_M : float
+        The (Transverse) Comoving Distance (in Mpc) corresponding to the Cosmological parameters given, at the redshift z_val.
+    """
+    h = parameters[0] / 100  # normalized Hubble's constant
+    omega_rad = 4.165e-5 / (h ** 2)
+    omega_k = 1 - sum(parameters[1:]) - omega_rad
+    if omega_k > 0:
+        d_M = HubbleDistance(parameters[0]) * (1 / np.sqrt(omega_k)) * np.sinh(np.sqrt(
+            omega_k) * comoving_distance_radial(parameters, z_val) / HubbleDistance(parameters[0]))
+    elif omega_k == 0:
+        d_M = comoving_distance_radial(parameters, z_val)
+    else:
+        d_M = HubbleDistance(parameters[0]) * (1 / np.sqrt(np.abs(omega_k))) * np.sin(np.sqrt(
+            np.abs(omega_k)) * comoving_distance_radial(parameters, z_val) / HubbleDistance(parameters[0]))
+    return(d_M)
 
 
 def comoving_volume(parameters, z_val):
@@ -149,9 +199,20 @@ def comoving_volume(parameters, z_val):
         The Comoving Volume (in cubic Gpc) corresponding to the Cosmological parameters given, at the redshift z_val.
 
     """
-    d_c = comoving_distance(parameters, z_val)
-    # convert from cubic Mpc to cubic Gpc.
-    V_c = (4 * pi / 3) * (d_c ** 3) / 1e9
+    d_M = comoving_distance_transverse(parameters, z_val)
+    h = parameters[0] / 100  # normalized Hubble's constant
+    omega_rad = 4.165e-5 / (h ** 2)
+    omega_k = 1 - sum(parameters[1:]) - omega_rad
+    if omega_k > 0:
+        V_c = (4 * pi * HubbleDistance(parameters[0]) ** 3) / (2 * omega_k) * ((d_M / HubbleDistance(parameters[0])) * np.sqrt(1 + omega_k * np.power(
+            d_M / HubbleDistance(parameters[0]), 2)) - 1 / np.sqrt(np.abs(omega_k)) * np.arcsinh(np.sqrt(np.abs(omega_k)) * d_M / HubbleDistance(parameters[0])))
+        V_c = V_c / 1e9
+    elif omega_k == 0:
+        V_c = (4 * pi / 3) * (d_M ** 3) / 1e9
+    else:
+        V_c = (4 * pi * HubbleDistance(parameters[0]) ** 3) / (2 * omega_k) * ((d_M / HubbleDistance(parameters[0])) * np.sqrt(1 + omega_k * np.power(
+            d_M / HubbleDistance(parameters[0]), 2)) - 1 / np.sqrt(np.abs(omega_k)) * np.arcsin(np.sqrt(np.abs(omega_k)) * d_M / HubbleDistance(parameters[0])))
+        V_c = V_c / 1e9
     return(V_c)
 
 
@@ -177,8 +238,8 @@ def angulardiameter_distance(parameters, z_val):
         The Angular Diameter Distance (in Mpc) corresponding to the Cosmological parameters given, at the redshift z_val.
 
     """
-    d_c = comoving_distance(parameters, z_val)
-    d_a = d_c / (1 + z_val)
+    d_M = comoving_distance_transverse(parameters, z_val)
+    d_a = d_M / (1 + z_val)
     return(d_a)
 
 
@@ -234,6 +295,6 @@ def luminosity_distance(parameters, z_val):
         The Luminosity Distance (in Mpc) corresponding to the Cosmological parameters given, at the redshift z_val.
 
     """
-    d_c = comoving_distance(parameters, z_val)
-    d_l = (1 + z_val) * d_c
+    d_M = comoving_distance_transverse(parameters, z_val)
+    d_l = (1 + z_val) * d_M
     return(d_l)

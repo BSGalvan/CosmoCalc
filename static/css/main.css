@@ -35,15 +35,15 @@ header h1.logo:hover {
  * Centering the body content
  */
 .container {
-  width: 800px;
+  width: 900px;
   margin-left: auto;
   margin-right: auto;
   height: auto;
   margin: 0 auto;
 }
 
-input {
-  width: 100%;
+input[type=text] {
+  width: 30%;
   padding: 10px;
   margin: 10px auto;
   color: #ffffff;
@@ -54,6 +54,49 @@ input {
   border: 2px #f92672;
   border-style: outset;
   border-radius: 10px;
+  text-align: center;
+}
+
+input[type=submit] {
+  width: 100%;
+  padding: 10px 10px;
+  margin: 10px auto;
+  color: #ffffff;
+  font-family: "Latin Modern Math", Helvetica, Arial, sans-serif;
+  font-size: 1.1em;
+  box-sizing: border-box;
+  margin: auto;
+  background-color: #75715e;
+  border: 2px #f92672;
+  border-style: outset;
+  border-radius: 10px;
+  text-align: center;
+}
+
+input[type=button] {
+  width: 25%;
+  padding: 10px;
+  margin: 10px auto;
+  color: #ffffff;
+  font-family: "Latin Modern Math", Helvetica, Arial, sans-serif;
+  font-size: 1.1em;
+  box-sizing: border-box;
+  background-color: #75715e;
+  border: 2px #f92672;
+  border-style: outset;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 4px #111;
+}
+
+input[type=button]:hover{
+  background-color: #383527;
+}
+
+input[type=button]:active{
+  background-color: #383527;
+  box-shadow: 0 2px #111;
+  transform: translateY(4px);
 }
 
 input:focus {
@@ -97,14 +140,37 @@ input[type=submit]:hover {
 }
 
 div.home, div.about {
-  padding: 3em 5em;
+  padding: 2em 3.5em;
   background-color: #333333;
   border-radius: 15px;
   box-shadow: 0px 0px 100px 50px black;
+  margin-bottom: 0.5em;
+  margin-top: 10px;
+}
+
+div.box-container {
+  width: 800px;
+  margin: auto;
+}
+
+div.box-left {
+  width: 400px;
+  text-align: center;
+  height: 500px;
+  background-color: #333333;
+  float: left;
+}
+
+div.box-right {
+  width: 400px;
+  height: 400px;
+  text-align: center;
+  background-color: #333333;
+  float: right;
 }
 
 div.results, div.about-text {
-  padding: 3em 5em;
+  padding: 2em 3.5em;
   background-color: #333333;
   border-radius: 15px;
   margin-left: auto;

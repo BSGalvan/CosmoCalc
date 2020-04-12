@@ -20,6 +20,7 @@ def home():
         z_user = None
         H = None
         Omega_m = None
+        Omega_vac = None
         form_inputs = request.form
         results = {}
         # print(form_inputs)
@@ -40,26 +41,79 @@ def home():
         if len(errors) != 0:
             return render_template("home.html", errors=errors)
         if len(errors) == 0 and z_user is not None and H is not None and Omega_m is not None:
-            params = [H, 1 - Omega_m, Omega_m]
-            results['Age of Universe (at z = 0) [in Gyr]'] = "{:.3f}".format(cf.t(
-                [cf.convertH(H), 1 - Omega_m, Omega_m], 0.0))
-            results['Age of Universe (at z = {redshift:.3f}) [in Gyr]'.format(
-                redshift=z_user)] = "{:.3f}".format(cf.t([cf.convertH(H), 1 - Omega_m, Omega_m], z_user))
-            results['Light Travel Time [in Gyr]'] = "{:.3f}".format(cf.lightTravelTime(
-                [cf.convertH(H), 1 - Omega_m, Omega_m], z_user))
-            results['Comoving Distance [in Mpc]'] = "{:.3f}".format(cf.comoving_distance(
-                params, z_user))
-            results['Comoving Volume [in Gpc]'] = "{:.3f}".format(cf.comoving_volume(
-                params, z_user))
-            results['Angular Diameter Distance [in Mpc]'] = "{:.3f}".format(cf.angulardiameter_distance(
-                params, z_user))
-            results['Angular Scale [in kpc/\'\']'] = "{:.3f}".format(cf.linear_scale(
-                params, z_user))
-            results['Luminosity Distance [in Mpc]'] = "{:.3f}".format(cf.luminosity_distance(
-                params, z_user))
-            results_df = pd.DataFrame.from_dict(results, orient='index', columns=['Values'])
-            results_table = results_df.to_html(classes="results")
-            return render_template("home.html", table=results_table)
+            if request.form['submit_button'] == "Flat":
+                input = "\n Hubble's Constant = {h:.3f}; Omega_m = {omega_m:.3f}; Omega_vac = {omega_vac:.3f}; Redshift = {z:.3f}".format(h=H, omega_m=Omega_m, omega_vac=1-Omega_m, z = z_user)
+                params = [H, 1 - Omega_m, Omega_m]
+                results['Age of Universe (at z = 0) [in Gyr]'] = "{:.3f}".format(cf.t(
+                    [cf.convertH(H), 1 - Omega_m, Omega_m], 0.0))
+                results['Age of Universe (at z = {redshift:.3f}) [in Gyr]'.format(
+                    redshift=z_user)] = "{:.3f}".format(cf.t([cf.convertH(H), 1 - Omega_m, Omega_m], z_user))
+                results['Light Travel Time [in Gyr]'] = "{:.3f}".format(cf.lightTravelTime(
+                    [cf.convertH(H), 1 - Omega_m, Omega_m], z_user))
+                results['Comoving Distance [in Mpc]'] = "{:.3f}".format(cf.comoving_distance_radial(
+                    params, z_user))
+                results['Comoving Volume [in cubic Gpc]'] = "{:.3f}".format(cf.comoving_volume(
+                    params, z_user))
+                results['Angular Diameter Distance [in Mpc]'] = "{:.3f}".format(cf.angulardiameter_distance(
+                    params, z_user))
+                results['Angular Scale [in kpc/\'\']'] = "{:.3f}".format(cf.linear_scale(
+                    params, z_user))
+                results['Luminosity Distance [in Mpc]'] = "{:.3f}".format(cf.luminosity_distance(
+                    params, z_user))
+                results_df = pd.DataFrame.from_dict(results, orient='index', columns=['Values'])
+                results_table = results_df.to_html(classes="results")
+                return render_template("home.html", table=results_table, inputs=input)
+            elif request.form['submit_button'] == "Open":
+                input = "\n Hubble's Constant = {h:.3f}; Omega_m = {omega_m:.3f}; Omega_vac = 0.000; Redshift = {z:.3f}".format(h=H, omega_m=Omega_m, z = z_user)
+                params = [H, 0.0, Omega_m]
+                results['Age of Universe (at z = 0) [in Gyr]'] = "{:.3f}".format(cf.t(
+                    [cf.convertH(H), 0.0, Omega_m], 0.0))
+                results['Age of Universe (at z = {redshift:.3f}) [in Gyr]'.format(
+                    redshift=z_user)] = "{:.3f}".format(cf.t([cf.convertH(H), 0.0, Omega_m], z_user))
+                results['Light Travel Time [in Gyr]'] = "{:.3f}".format(cf.lightTravelTime(
+                    [cf.convertH(H), 0.0, Omega_m], z_user))
+                results['Comoving Distance [in Mpc]'] = "{:.3f}".format(cf.comoving_distance_radial(
+                    params, z_user))
+                results['Comoving Volume [in cubic Gpc]'] = "{:.3f}".format(cf.comoving_volume(
+                    params, z_user))
+                results['Angular Diameter Distance [in Mpc]'] = "{:.3f}".format(cf.angulardiameter_distance(
+                    params, z_user))
+                results['Angular Scale [in kpc/\'\']'] = "{:.3f}".format(cf.linear_scale(
+                    params, z_user))
+                results['Luminosity Distance [in Mpc]'] = "{:.3f}".format(cf.luminosity_distance(
+                    params, z_user))
+                results_df = pd.DataFrame.from_dict(results, orient='index', columns=['Values'])
+                results_table = results_df.to_html(classes="results")
+                return render_template("home.html", table=results_table, inputs=input)
+            elif request.form['submit_button'] == "General":
+                try:
+                    Omega_vac = float(form_inputs['omega_vac'])
+                except:
+                    errors += "{!r} is not a number! \n".format(form_inputs['omega_vac'])
+                if len(errors) != 0:
+                    return render_template("home.html", errors=errors)
+                if len(errors) == 0 and Omega_vac is not None:
+                    input = "\n Hubble's Constant = {h:.3f}; Omega_m = {omega_m:.3f}; Omega_vac = {omega_vac:.3f}; Redshift = {z:.3f}".format(h=H, omega_m=Omega_m, omega_vac=Omega_vac, z = z_user)
+                    params = [H, Omega_vac, Omega_m]
+                    results['Age of Universe (at z = 0) [in Gyr]'] = "{:.3f}".format(cf.t(
+                        [cf.convertH(H), Omega_vac, Omega_m], 0.0))
+                    results['Age of Universe (at z = {redshift:.3f}) [in Gyr]'.format(
+                        redshift=z_user)] = "{:.3f}".format(cf.t([cf.convertH(H), Omega_vac, Omega_m], z_user))
+                    results['Light Travel Time [in Gyr]'] = "{:.3f}".format(cf.lightTravelTime(
+                        [cf.convertH(H), Omega_vac, Omega_m], z_user))
+                    results['Comoving Distance [in Mpc]'] = "{:.3f}".format(cf.comoving_distance_radial(
+                        params, z_user))
+                    results['Comoving Volume [in cubic Gpc]'] = "{:.3f}".format(cf.comoving_volume(
+                        params, z_user))
+                    results['Angular Diameter Distance [in Mpc]'] = "{:.3f}".format(cf.angulardiameter_distance(
+                        params, z_user))
+                    results['Angular Scale [in kpc/\'\']'] = "{:.3f}".format(cf.linear_scale(
+                        params, z_user))
+                    results['Luminosity Distance [in Mpc]'] = "{:.3f}".format(cf.luminosity_distance(
+                        params, z_user))
+                    results_df = pd.DataFrame.from_dict(results, orient='index', columns=['Values'])
+                    results_table = results_df.to_html(classes="results")
+                    return render_template("home.html", table=results_table, inputs=input)
     if request.method == "GET":
         return render_template("home.html")
 
