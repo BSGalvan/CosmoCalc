@@ -15,10 +15,9 @@ Note : Skip this section if you have the [Anaconda](https://www.anaconda.com/dis
 	* python-dateutil - which requires six
 	* pytz
 
-To run this website on your machine, make sure of the following : 
+To install the above dependencies:
 1. Make sure you have a working Python installation on your machine. To do this, type `python --version` in a terminal. If this step produces no output, you may need to [install python](https://www.python.org/downloads/) on your machine. 
-2. Once you have Python installed, get `pip`, the python package manager, and install it. Here are [some instructions](https://pip.pypa.io/en/stable/installing/)
-3. Once `pip` is set up, simply execute `pip install <package-name>` to install the required dependencies.
+2. Once you have Python installed, get `pip`, the python package manager, and install it. Here are [some instructions.](https://pip.pypa.io/en/stable/installing/). Once `pip` is set up, simply execute `pip install <package-name>` to install the required dependencies.
 
 # Running this Website on your Local Machine
 
