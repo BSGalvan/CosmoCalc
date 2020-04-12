@@ -6,41 +6,49 @@
   {% block content %}
   <div class="home">
     <b>
-      {{ errors }}
+      Errors: {{ errors }}
     </b>
-    <h1 align='center'> The Calculator </h1>
-    <p align='center'>Enter the values, hit a button:</p>
-    <form method="post" action=".">
-      <div class="box-container">
-        <div class="box-left">
-          <p><var>z</var> &dArr;<br><input type="text" name="redshift" /></p>
-          <p><var>H<sub>0</sub></var> &dArr; <br><input type="text" name="hubblepar" /></p>
-          <p><var>&Omega;</var><sub>m</sub></var> &dArr; <br><input type="text" name="omega_m" /></p>
-          <p><var>&Omega;</var><sub>&Lambda;</sub></var> &dArr; <br><input type="text" name="omega_vac" /></p>
+    <div class="calculator">
+      <h1 align='center'> The Calculator </h1>
+      <p align='center'>Enter the values, hit a button:</p>
+      <form method="post" action=".">
+        <div class="box-container">
+          <hr>
+          <div class="box-left">
+            <p><var>z</var> &dArr;<br><input type="text" name="redshift" /></p>
+            <p><var>H<sub>0</sub></var> &dArr; <br><input type="text" name="hubblepar" /></p>
+            <p><var>&Omega;</var><sub>m</sub></var> &dArr; <br><input type="text" name="omega_m" /></p>
+            <p><var>&Omega;</var><sub>&Lambda;</sub></var> &dArr; <br><input type="text" name="omega_vac" /></p>
+          </div>
+          <div class="box-right">
+            <p>Choose to set <var>&Omega;<sub>&Lambda;</sub> = 1 - &Omega;<sub>m</sub></var> <br> <input type="submit" name="submit_button" value="Flat"> </p>
+            <p>Choose to set <var>&Omega;<sub>&Lambda;</sub> = 0 </var> <br> <input type="submit" name="submit_button" value="Open"> </p>
+            <p>Choose to set <var>&Omega;<sub>&Lambda;</sub> </var> as the value specified: <br> <input type="submit" name="submit_button" value="General"></p>
+            <p> Note that :</p>
+            <p><var>1 Gly = 1,000,000,000</var> light years or <var>9.461 &times; 10<sup>26</sup><var> cm.</p>
+            <p><var>1 Gyr = 1,000,000,000 years.</var></p>
+            <p><var>1 Mpc = 1,000,000 parsecs = 3.08568 &times; 10<sup>24</sup> cm</var> or <var>3,261,566</var> light years </p>
+          </div>
         </div>
-        <div class="box-right">
-          <p>Choose to set <var>&Omega;<sub>&Lambda;</sub> = 1 - &Omega;<sub>m</sub></var> <br> <input type="submit" name="submit_button" value="Flat"> </p>
-          <p>Choose to set <var>&Omega;<sub>&Lambda;</sub> = 0 </var> <br> <input type="submit" name="submit_button" value="Open"> </p>
-          <p>Choose to set <var>&Omega;<sub>&Lambda;</sub> </var> as the value specified: <br> <input type="submit" name="submit_button" value="General"></p>
-        </div>
-        <p><input type="submit" value="Calculate!" /></p>
-      </div>
       </form>
-
-
+    </div>
+    <div class="results">
+      <h1>The Results</h1>
+      <p align="center"> For the inputs as follows :</p>
       <hr>
-
-      <div class="results">
-        <h1>The Results</h1>
-        <p align="center"> For the inputs as follows:</p>
-        <p align="center">
-          {{ inputs }}
-        </p>
-        <p align='center'>The results are as follows:</p>
-        {{ table|safe }}
-        <p align='center'> <a href="/"> Click here to calculate again </a></p>
-      </div>
-      {% endblock %}
+      <p align="center">
+      <ul class="inputs">
+        <li> Redshift, <var>z</var> = {{rs}} </li>
+        <li> Hubble's Constant, <var>H<sub>0</sub></var> = {{hpar}} </li>
+        <li> Mass Density, <var>&Omega;</var><sub>M</sub></var> = {{om}} </li>
+        <li> Dark Energy Density, <var>&Omega;</var><sub>&Lambda;</sub></var> = {{de}} </li>
+      </ul>
+      </p>
+      <p align='center'>The results are :</p>
+      {{ table|safe }}
+      <p align='center'> <a href="/"> Click here to calculate again </a></p>
+    </div>
+    {% endblock %}
   </div>
 </body>
 

@@ -42,7 +42,6 @@ def home():
             return render_template("home.html", errors=errors)
         if len(errors) == 0 and z_user is not None and H is not None and Omega_m is not None:
             if request.form['submit_button'] == "Flat":
-                input = "\n Hubble's Constant = {h:.3f}; Omega_m = {omega_m:.3f}; Omega_vac = {omega_vac:.3f}; Redshift = {z:.3f}".format(h=H, omega_m=Omega_m, omega_vac=1-Omega_m, z = z_user)
                 params = [H, 1 - Omega_m, Omega_m]
                 results['Age of Universe (at z = 0) [in Gyr]'] = "{:.3f}".format(cf.t(
                     [cf.convertH(H), 1 - Omega_m, Omega_m], 0.0))
@@ -62,9 +61,8 @@ def home():
                     params, z_user))
                 results_df = pd.DataFrame.from_dict(results, orient='index', columns=['Values'])
                 results_table = results_df.to_html(classes="results")
-                return render_template("home.html", table=results_table, inputs=input)
+                return render_template("home.html", table=results_table, rs=str(z_user), hpar=str(H), om=str(Omega_m), de=str(params[1]))
             elif request.form['submit_button'] == "Open":
-                input = "\n Hubble's Constant = {h:.3f}; Omega_m = {omega_m:.3f}; Omega_vac = 0.000; Redshift = {z:.3f}".format(h=H, omega_m=Omega_m, z = z_user)
                 params = [H, 0.0, Omega_m]
                 results['Age of Universe (at z = 0) [in Gyr]'] = "{:.3f}".format(cf.t(
                     [cf.convertH(H), 0.0, Omega_m], 0.0))
@@ -84,7 +82,7 @@ def home():
                     params, z_user))
                 results_df = pd.DataFrame.from_dict(results, orient='index', columns=['Values'])
                 results_table = results_df.to_html(classes="results")
-                return render_template("home.html", table=results_table, inputs=input)
+                return render_template("home.html", table=results_table, rs=str(z_user), hpar=str(H), om=str(Omega_m), de=str(params[1]))
             elif request.form['submit_button'] == "General":
                 try:
                     Omega_vac = float(form_inputs['omega_vac'])
@@ -93,7 +91,6 @@ def home():
                 if len(errors) != 0:
                     return render_template("home.html", errors=errors)
                 if len(errors) == 0 and Omega_vac is not None:
-                    input = "\n Hubble's Constant = {h:.3f}; Omega_m = {omega_m:.3f}; Omega_vac = {omega_vac:.3f}; Redshift = {z:.3f}".format(h=H, omega_m=Omega_m, omega_vac=Omega_vac, z = z_user)
                     params = [H, Omega_vac, Omega_m]
                     results['Age of Universe (at z = 0) [in Gyr]'] = "{:.3f}".format(cf.t(
                         [cf.convertH(H), Omega_vac, Omega_m], 0.0))
@@ -113,7 +110,7 @@ def home():
                         params, z_user))
                     results_df = pd.DataFrame.from_dict(results, orient='index', columns=['Values'])
                     results_table = results_df.to_html(classes="results")
-                    return render_template("home.html", table=results_table, inputs=input)
+                    return render_template("home.html", table=results_table, rs=str(z_user), hpar=str(H), om=str(Omega_m), de=str(params[1]))
     if request.method == "GET":
         return render_template("home.html")
 
