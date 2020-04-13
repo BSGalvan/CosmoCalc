@@ -1,5 +1,5 @@
 # CosmoCalc
-A project page for the Cosmological Calculator (a la Ned Wright), written using NumPy, SciPy, pandas, Flask and a little bit of HTML and CSS.
+A project page for the Cosmological Calculator (à la Ned Wright), written using NumPy, SciPy, pandas, Flask and a little bit of HTML and CSS.
 
 # Dependencies
 Note : Skip this section if you have the [Anaconda](https://www.anaconda.com/distribution/) distribution installed on your system. That will already have the dependencies listed below.
