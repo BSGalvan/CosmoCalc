@@ -201,10 +201,18 @@ p {
   font-size: 1.2em;
   font-weight: bold;
   margin-top: 1rem;
-  margin-left792eff: 1rem;
+  margin-left: 1rem;
   margin-right: 1rem;
   letter-spacing: normal;
-  color: #00000;
+}
+
+p.Note{
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-top: 1rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  letter-spacing: normal;
 }
 
 h3 {
