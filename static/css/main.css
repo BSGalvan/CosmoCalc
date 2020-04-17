@@ -184,7 +184,7 @@ div.results, div.about-text {
 }
 
 h1 {
-  font-size: 3em;
+  font-size: 2.5em;
   margin-top: 20px;
   text-align: center;
   letter-spacing: -1px;
@@ -207,7 +207,7 @@ p {
 }
 
 p.Note{
-  font-size: 1.1rem;
+  font-size: 1.0em;
   font-weight: bold;
   margin-top: 1rem;
   margin-left: 1rem;
@@ -281,12 +281,13 @@ table.dataframe, .dataframe th, .dataframe td {
   border-collapse: collapse;
   border-right: 1px solid #C8C8C8;
   border-left: 1px solid #C8C8C8;
+  border-top: 1px solid #C8C8C8;
   text-align: center;
   padding: 10px;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 40px;
-  font-size: 1.1em;
+  font-size: 1.0em;
 }
 
 .results th {
