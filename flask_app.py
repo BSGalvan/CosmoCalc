@@ -50,13 +50,15 @@ def home():
                         [cf.convertH(H), 1 - Omega_m, Omega_m], 0.0) * 1000)
                 else:
                     results['Age of Universe (at z = 0) [in Gyr]'] = "{:.3f}".format(cf.t(
-                        [cf.convertH(H), 1 - Omega_m, Omega_m], 0.0) * 1000)
+                        [cf.convertH(H), 1 - Omega_m, Omega_m], 0.0))
+
                 if (cf.t([cf.convertH(H), 1 - Omega_m, Omega_m], z_user) < 1):
                     results['Age of Universe (at z = {redshift:.3f}) [in Myr]'.format(
                         redshift=z_user)] = "{:.3f}".format(cf.t([cf.convertH(H), 1 - Omega_m, Omega_m], z_user) * 1000)
                 else:
                     results['Age of Universe (at z = {redshift:.3f}) [in Gyr]'.format(
-                        redshift=z_user)] = "{:.3f}".format(cf.t([cf.convertH(H), 1 - Omega_m, Omega_m], z_user) * 1000)
+                        redshift=z_user)] = "{:.3f}".format(cf.t([cf.convertH(H), 1 - Omega_m, Omega_m], z_user))
+
                 if (cf.lightTravelTime(
                         [cf.convertH(H), 1 - Omega_m, Omega_m], z_user) < 1):
                     results['Light Travel Time [in Myr]'] = "{:.3f}".format(cf.lightTravelTime(
@@ -64,174 +66,196 @@ def home():
                 else:
                     results['Light Travel Time [in Gyr]'] = "{:.3f}".format(cf.lightTravelTime(
                         [cf.convertH(H), 1 - Omega_m, Omega_m], z_user))
+
                 if (cf.comoving_distance_radial(
                         params, z_user) < 1):
                     results['Comoving Distance [in kpc]'] = "{:.3f}".format(cf.comoving_distance_radial(
-                        params, z_user))
+                        params, z_user) * 1000)
                 else:
                     results['Comoving Distance [in Mpc]'] = "{:.3f}".format(cf.comoving_distance_radial(
                         params, z_user))
+
                 if (cf.comoving_volume(
-                    params, z_user) < 1):
+                        params, z_user) < 1):
                     results['Comoving Volume [in cubic Mpc]'] = "{:.3f}".format(cf.comoving_volume(
                         params, z_user) * 1e9)
                 else:
                     results['Comoving Volume [in cubic Gpc]'] = "{:.3f}".format(cf.comoving_volume(
                         params, z_user))
+
                 if(cf.angulardiameter_distance(
-                    params, z_user) < 1):
+                        params, z_user) < 1):
                     results['Angular Diameter Distance [in kpc]'] = "{:.3f}".format(cf.angulardiameter_distance(
-                    params, z_user))
+                        params, z_user) * 1000)
                 else:
                     results['Angular Diameter Distance [in Mpc]'] = "{:.3f}".format(cf.angulardiameter_distance(
-                    params, z_user))
+                        params, z_user))
+
                 if (format(cf.linear_scale(
-                    params, z_user) < 1)):
-                    results['Angular Scale [in pc/\'\']']="{:.3f}".format(cf.linear_scale(
-                    params, z_user) * 1000)
+                        params, z_user) < 1)):
+                    results['Angular Scale [in pc/\'\']'] = "{:.3f}".format(cf.linear_scale(
+                        params, z_user) * 1000)
                 else:
-                    results['Angular Scale [in kpc/\'\']']="{:.3f}".format(cf.linear_scale(
-                    params, z_user))
+                    results['Angular Scale [in kpc/\'\']'] = "{:.3f}".format(cf.linear_scale(
+                        params, z_user))
+
                 if (cf.luminosity_distance(
-                    params, z_user) < 1):
-                    results['Luminosity Distance [in kpc]']="{:.3f}".format(cf.luminosity_distance(
-                    params, z_user))
+                        params, z_user) < 1):
+                    results['Luminosity Distance [in kpc]'] = "{:.3f}".format(cf.luminosity_distance(
+                        params, z_user) * 1000)
                 else:
-                    results['Luminosity Distance [in Mpc]']="{:.3f}".format(cf.luminosity_distance(
-                    params, z_user))
-                results_df=pd.DataFrame.from_dict(
+                    results['Luminosity Distance [in Mpc]'] = "{:.3f}".format(cf.luminosity_distance(
+                        params, z_user))
+
+                results_df = pd.DataFrame.from_dict(
                     results, orient='index', columns=['Values'])
-                results_table=results_df.to_html(classes="results")
+                results_table = results_df.to_html(classes="results")
                 return render_template("home.html", table=results_table, rs=str(z_user), hpar=str(H), om=str(Omega_m), de=str(params[1]))
             elif request.form['submit_button'] == "Open":
-                params=[H, 0.0, Omega_m]
+                params = [H, 0.0, Omega_m]
                 if (cf.t(
-                    [cf.convertH(H), 0.0, Omega_m], 0.0) < 1):
-                    results['Age of Universe (at z = 0) [in Myr]']="{:.3f}".format(cf.t(
-                    [cf.convertH(H), 0.0, Omega_m], 0.0) * 1e3)
+                        [cf.convertH(H), 0.0, Omega_m], 0.0) < 1):
+                    results['Age of Universe (at z = 0) [in Myr]'] = "{:.3f}".format(cf.t(
+                        [cf.convertH(H), 0.0, Omega_m], 0.0) * 1e3)
                 else:
-                    results['Age of Universe (at z = 0) [in Gyr]']="{:.3f}".format(cf.t(
-                    [cf.convertH(H), 0.0, Omega_m], 0.0))
+                    results['Age of Universe (at z = 0) [in Gyr]'] = "{:.3f}".format(cf.t(
+                        [cf.convertH(H), 0.0, Omega_m], 0.0))
+
                 if (cf.t([cf.convertH(H), 0.0, Omega_m], z_user) < 1):
                     results['Age of Universe (at z = {redshift:.3f}) [in Myr]'.format(
-                    redshift=z_user)]="{:.3f}".format(cf.t([cf.convertH(H), 0.0, Omega_m], z_user) * 1e3)
+                        redshift=z_user)] = "{:.3f}".format(cf.t([cf.convertH(H), 0.0, Omega_m], z_user) * 1e3)
                 else:
                     results['Age of Universe (at z = {redshift:.3f}) [in Gyr]'.format(
-                    redshift=z_user)]="{:.3f}".format(cf.t([cf.convertH(H), 0.0, Omega_m], z_user))
+                        redshift=z_user)] = "{:.3f}".format(cf.t([cf.convertH(H), 0.0, Omega_m], z_user))
+
                 if (cf.lightTravelTime(
-                    [cf.convertH(H), 0.0, Omega_m], z_user)):
-                    results['Light Travel Time [in Myr]']="{:.3f}".format(cf.lightTravelTime(
-                    [cf.convertH(H), 0.0, Omega_m], z_user) * 1000)
+                        [cf.convertH(H), 0.0, Omega_m], z_user) < 1):
+                    results['Light Travel Time [in Myr]'] = "{:.3f}".format(cf.lightTravelTime(
+                        [cf.convertH(H), 0.0, Omega_m], z_user) * 1000)
                 else:
-                    results['Light Travel Time [in Gyr]']="{:.3f}".format(cf.lightTravelTime(
-                    [cf.convertH(H), 0.0, Omega_m], z_user))
+                    results['Light Travel Time [in Gyr]'] = "{:.3f}".format(cf.lightTravelTime(
+                        [cf.convertH(H), 0.0, Omega_m], z_user))
+
                 if (cf.comoving_distance_radial(
-                    params, z_user) < 1):
-                    results['Comoving Distance [in kpc]']="{:.3f}".format(cf.comoving_distance_radial(
-                    params, z_user) * 1e3)
+                        params, z_user) < 1):
+                    results['Comoving Distance [in kpc]'] = "{:.3f}".format(cf.comoving_distance_radial(
+                        params, z_user) * 1e3)
                 else:
-                    results['Comoving Distance [in Mpc]']="{:.3f}".format(cf.comoving_distance_radial(
+                    results['Comoving Distance [in Mpc]'] = "{:.3f}".format(cf.comoving_distance_radial(
                         params, z_user))
+
                 if (cf.comoving_volume(
-                    params, z_user) < 1):
-                    results['Comoving Volume [in cubic Mpc]']="{:.3f}".format(cf.comoving_volume(
-                    params, z_user) * 1e9)
+                        params, z_user) < 1):
+                    results['Comoving Volume [in cubic Mpc]'] = "{:.3f}".format(cf.comoving_volume(
+                        params, z_user) * 1e9)
                 else:
-                    results['Comoving Volume [in cubic Gpc]']="{:.3f}".format(cf.comoving_volume(
-                    params, z_user))
+                    results['Comoving Volume [in cubic Gpc]'] = "{:.3f}".format(cf.comoving_volume(
+                        params, z_user))
+
                 if (cf.angulardiameter_distance(
-                    params, z_user) < 1):
-                    results['Angular Diameter Distance [in Mpc]']="{:.3f}".format(cf.angulardiameter_distance(
-                    params, z_user) * 1e3)
+                        params, z_user) < 1):
+                    results['Angular Diameter Distance [in Mpc]'] = "{:.3f}".format(cf.angulardiameter_distance(
+                        params, z_user) * 1e3)
                 else:
-                    results['Angular Diameter Distance [in Gpc]']="{:.3f}".format(cf.angulardiameter_distance(
-                    params, z_user))
+                    results['Angular Diameter Distance [in Gpc]'] = "{:.3f}".format(cf.angulardiameter_distance(
+                        params, z_user))
+
                 if (cf.linear_scale(
-                    params, z_user) < 1):
-                    results['Angular Scale [in pc/\'\']']="{:.3f}".format(cf.linear_scale(
-                    params, z_user) * 1e3)
+                        params, z_user) < 1):
+                    results['Angular Scale [in pc/\'\']'] = "{:.3f}".format(cf.linear_scale(
+                        params, z_user) * 1e3)
                 else:
-                    results['Angular Scale [in kpc/\'\']']="{:.3f}".format(cf.linear_scale(
-                    params, z_user))
+                    results['Angular Scale [in kpc/\'\']'] = "{:.3f}".format(cf.linear_scale(
+                        params, z_user))
+
                 if (cf.luminosity_distance(
-                    params, z_user) < 1):
-                    results['Luminosity Distance [in kpc]']="{:.3f}".format(cf.luminosity_distance(
-                    params, z_user) * 1e3)
+                        params, z_user) < 1):
+                    results['Luminosity Distance [in kpc]'] = "{:.3f}".format(cf.luminosity_distance(
+                        params, z_user) * 1e3)
                 else:
-                    results['Luminosity Distance [in Mpc]']="{:.3f}".format(cf.luminosity_distance(
-                    params, z_user))
-                results_df=pd.DataFrame.from_dict(
+                    results['Luminosity Distance [in Mpc]'] = "{:.3f}".format(cf.luminosity_distance(
+                        params, z_user))
+
+                results_df = pd.DataFrame.from_dict(
                     results, orient='index', columns=['Values'])
-                results_table=results_df.to_html(classes="results")
+                results_table = results_df.to_html(classes="results")
                 return render_template("home.html", table=results_table, rs=str(z_user), hpar=str(H), om=str(Omega_m), de=str(params[1]))
             elif request.form['submit_button'] == "General":
                 try:
-                    Omega_vac=float(form_inputs['omega_vac'])
+                    Omega_vac = float(form_inputs['omega_vac'])
                 except:
                     error_vac += "{!r} is not a number! Enter valid value for dark energy density.".format(
                         form_inputs['omega_vac'])
                 if len(error_red) != 0 or len(error_m) != 0 or len(error_h) != 0 or len(error_vac) != 0:
                     return render_template("home.html", error_1=error_red, error_2=error_h, error_3=error_m, error_4=error_vac)
                 if len(error_red) == 0 and len(error_m) == 0 and len(error_h) == 0 and len(error_vac) == 0 and Omega_vac is not None:
-                    params=[H, Omega_vac, Omega_m]
+                    params = [H, Omega_vac, Omega_m]
                     if (cf.t(
-                        [cf.convertH(H), Omega_vac, Omega_m], 0.0) < 1):
-                        results['Age of Universe (at z = 0) [in Myr]']="{:.3f}".format(cf.t(
-                        [cf.convertH(H), Omega_vac, Omega_m], 0.0) * 1e3)
+                            [cf.convertH(H), Omega_vac, Omega_m], 0.0) < 1):
+                        results['Age of Universe (at z = 0) [in Myr]'] = "{:.3f}".format(cf.t(
+                            [cf.convertH(H), Omega_vac, Omega_m], 0.0) * 1e3)
                     else:
-                        results['Age of Universe (at z = 0) [in Gyr]']="{:.3f}".format(cf.t(
+                        results['Age of Universe (at z = 0) [in Gyr]'] = "{:.3f}".format(cf.t(
                             [cf.convertH(H), Omega_vac, Omega_m], 0.0))
+
                     if (cf.t([cf.convertH(H), Omega_vac, Omega_m], z_user) < 1):
                         results['Age of Universe (at z = {redshift:.3f}) [in Myr]'.format(
-                        redshift=z_user)]="{:.3f}".format(cf.t([cf.convertH(H), Omega_vac, Omega_m], z_user) * 1e3)
+                            redshift=z_user)] = "{:.3f}".format(cf.t([cf.convertH(H), Omega_vac, Omega_m], z_user) * 1e3)
                     else:
                         results['Age of Universe (at z = {redshift:.3f}) [in Gyr]'.format(
-                        redshift=z_user)]="{:.3f}".format(cf.t([cf.convertH(H), Omega_vac, Omega_m], z_user))
+                            redshift=z_user)] = "{:.3f}".format(cf.t([cf.convertH(H), Omega_vac, Omega_m], z_user))
+
                     if(cf.lightTravelTime(
-                        [cf.convertH(H), Omega_vac, Omega_m], z_user) < 1):
-                        results['Light Travel Time [in Myr]']="{:.3f}".format(cf.lightTravelTime(
-                        [cf.convertH(H), Omega_vac, Omega_m], z_user) * 1e3)
+                            [cf.convertH(H), Omega_vac, Omega_m], z_user) < 1):
+                        results['Light Travel Time [in Myr]'] = "{:.3f}".format(cf.lightTravelTime(
+                            [cf.convertH(H), Omega_vac, Omega_m], z_user) * 1e3)
                     else:
-                        results['Light Travel Time [in Gyr]']="{:.3f}".format(cf.lightTravelTime(
-                        [cf.convertH(H), Omega_vac, Omega_m], z_user))
+                        results['Light Travel Time [in Gyr]'] = "{:.3f}".format(cf.lightTravelTime(
+                            [cf.convertH(H), Omega_vac, Omega_m], z_user))
+
                     if(cf.comoving_distance_radial(
-                        params, z_user) < 1):
-                        results['Comoving Distance [in kpc]']="{:.3f}".format(cf.comoving_distance_radial(
-                        params, z_user) * 1e3)
+                            params, z_user) < 1):
+                        results['Comoving Distance [in kpc]'] = "{:.3f}".format(cf.comoving_distance_radial(
+                            params, z_user) * 1e3)
                     else:
-                        results['Comoving Distance [in Mpc]']="{:.3f}".format(cf.comoving_distance_radial(
-                        params, z_user))
+                        results['Comoving Distance [in Mpc]'] = "{:.3f}".format(cf.comoving_distance_radial(
+                            params, z_user))
+
                     if(cf.comoving_volume(
-                        params, z_user) < 1):
-                        results['Comoving Volume [in cubic Mpc]']="{:.3f}".format(cf.comoving_volume(
-                        params, z_user) * 1e9)
+                            params, z_user) < 1):
+                        results['Comoving Volume [in cubic Mpc]'] = "{:.3f}".format(cf.comoving_volume(
+                            params, z_user) * 1e9)
                     else:
-                        results['Comoving Volume [in cubic Gpc]']="{:.3f}".format(cf.comoving_volume(
-                        params, z_user))
+                        results['Comoving Volume [in cubic Gpc]'] = "{:.3f}".format(cf.comoving_volume(
+                            params, z_user))
+
                     if(cf.angulardiameter_distance(
-                        params, z_user) < 1):
-                        results['Angular Diameter Distance [in kpc]']="{:.3f}".format(cf.angulardiameter_distance(
-                        params, z_user))
+                            params, z_user) < 1):
+                        results['Angular Diameter Distance [in kpc]'] = "{:.3f}".format(cf.angulardiameter_distance(
+                            params, z_user) * 1e3)
                     else:
-                        results['Angular Diameter Distance [in Mpc]']="{:.3f}".format(cf.angulardiameter_distance(
-                        params, z_user))
+                        results['Angular Diameter Distance [in Mpc]'] = "{:.3f}".format(cf.angulardiameter_distance(
+                            params, z_user))
+
                     if(cf.linear_scale(
-                    params, z_user) < 1):
-                        results['Angular Scale [in pc/\'\']']="{:.3f}".format(cf.linear_scale(
-                        params, z_user) * 1e3)
+                            params, z_user) < 1):
+                        results['Angular Scale [in pc/\'\']'] = "{:.3f}".format(cf.linear_scale(
+                            params, z_user) * 1e3)
                     else:
-                        results['Angular Scale [in kpc/\'\']']="{:.3f}".format(cf.linear_scale(
-                        params, z_user))
+                        results['Angular Scale [in kpc/\'\']'] = "{:.3f}".format(cf.linear_scale(
+                            params, z_user))
+
                     if(cf.luminosity_distance(
-                        params, z_user) < 1):
-                        results['Luminosity Distance [in kpc]']="{:.3f}".format(cf.luminosity_distance(
-                        params, z_user) * 1e3)
+                            params, z_user) < 1):
+                        results['Luminosity Distance [in kpc]'] = "{:.3f}".format(cf.luminosity_distance(
+                            params, z_user) * 1e3)
                     else:
-                        results['Luminosity Distance [in Mpc]']="{:.3f}".format(cf.luminosity_distance(
-                        params, z_user))
-                    results_df=pd.DataFrame.from_dict(
+                        results['Luminosity Distance [in Mpc]'] = "{:.3f}".format(cf.luminosity_distance(
+                            params, z_user))
+
+                    results_df = pd.DataFrame.from_dict(
                         results, orient='index', columns=['Values'])
-                    results_table=results_df.to_html(classes="results")
+                    results_table = results_df.to_html(classes="results")
                     return render_template("home.html", table=results_table, rs=str(z_user), hpar=str(H), om=str(Omega_m), de=str(params[1]))
     if request.method == "GET":
         return render_template("home.html")
