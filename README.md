@@ -1,5 +1,5 @@
 # CosmoCalc
-A project page for the Cosmological Calculator (à la Ned Wright), written using NumPy, SciPy, pandas, Flask and a little bit of HTML and CSS. The rendered, working website is [here](http://bsgalvan98.pythonanywhere.com/)
+A project page for the Cosmological Calculator (à la Ned Wright), written using NumPy, SciPy, pandas, Flask and a little bit of HTML and CSS. The rendered, working website is [here](http://bsgalvan98.pythonanywhere.com/).
 
 ---
 
