@@ -5,14 +5,11 @@
   {% extends "layout.html" %}
   {% block content %}
   <div class="home">
-    <b>
-      Errors: {{ errors }}
-    </b>
     <div class="calculator">
       <h1 align='center'> The Calculator </h1>
       <p align='center'>Enter the values, hit a button:</p>
-      <form method="post" action=".">
-        <div class="box-container">
+      <form method="post" action="./#results">
+        <div class=" box-container">
           <hr>
           <div class="box-left">
             <p><var>z</var> &dArr;<br><input type="text" name="redshift" /></p>
@@ -32,8 +29,16 @@
         </div>
       </form>
     </div>
+
     <div class="results">
-      <h1>The Results</h1>
+      <p>
+        Errors: <br />
+        {{error_1}} <br />
+        {{error_2}} <br />
+        {{error_3}} <br />
+        {{error_4}} <br />
+      </p>
+      <h1 id="results">The Results</h1>
       <p align="center"> For the inputs as follows :</p>
       <hr>
       <p align="center">
@@ -48,6 +53,12 @@
       {{ table|safe }}
       <p align='center'> <a href="/"> Click here to calculate again </a></p>
     </div>
+    <script>
+      function jump() {
+        var element = document.getElementById("results");
+        element.scrollIntoView();
+      }
+    </script>
     {% endblock %}
   </div>
 </body>
