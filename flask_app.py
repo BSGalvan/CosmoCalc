@@ -42,6 +42,7 @@ def home():
         if len(error_red) != 0 or len(error_m) != 0 or len(error_h) != 0:
             return render_template("home.html", error_1=error_red, error_2=error_h, error_3=error_m, error_4=error_vac)
         if len(error_red) == 0 and len(error_m) == 0 and len(error_h) == 0 and z_user is not None and H is not None and Omega_m is not None:
+            z_user = -1 * z_user if z_user < 0 else z_user
             if request.form['submit_button'] == "Flat":
                 params = [H, 1 - Omega_m, Omega_m]
                 if (cf.t(
